@@ -1,37 +1,41 @@
 const mongoose = require("mongoose");
 
-const SlideSchema = mongoose.Schema({
+const PostSchema = mongoose.Schema({
   title: String,
-  desc: String,
+  content: String,
   image_credit: String,
-  img_url: String
+  image_url: String,
 });
 
 const GallerySchema = mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   slug: {
     type: String,
-    required: true
+    required: true,
   },
   desc: {
     type: String,
-    default: ""
+    default: "",
   },
-  tags: {
-    type: [String],
-    default: []
-  },
-  img_url: {
+  category: {
     type: String,
-    default: null
+    required: true,
+    default: "",
   },
-  slides: {
-    type: [SlideSchema],
-    required: true
-  }
+  image_credits: {
+    type: String,
+    default: "credit",
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+  posts: {
+    type: [PostSchema],
+  },
 });
 
-module.exports = mongoose.model("Gallery", GallerySchema);
+module.exports = mongoose.model("Gallery", GallerySchema, "Content");

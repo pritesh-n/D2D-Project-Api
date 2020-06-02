@@ -23,10 +23,10 @@ app.get("/", (req, res) => {
 
 //Connect to DB
 mongoose.connect(
-  process.env.DB_CONNECTION,
+  "mongodb://localhost:27017/funfiesta",
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   },
   () => {
     console.log("connected to db!");

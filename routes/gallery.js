@@ -3,16 +3,17 @@ const router = express.Router();
 const Gallery = require("../models/Gallery");
 
 //Get all galleries
-router.get("/", async (req, res) => {
+router.get("/", async ({ query }, res) => {
   try {
-    let query = { _id: 0 };
-    if (req.query.meta_info) {
-      query = { title: 1, desc: 1, img_url: 1, slug: 1, tags: 1, _id: 0 };
+    let queryParams = { _id: 0 };
+    let limit = query.limit ? Number(query.limit) : 10;
+    if (query.meta_info) {
+      queryParams = { title: 1, desc: 1, slug: 1, category: 1, _id: 0 };
     }
-    const galleries = await Gallery.find({}, query);
-    res.json(galleries);
+    const galleries = await Gallery.find({}, queryParams).limit(limit);
+    res.send(galleries);
   } catch (err) {
-    res.json({ message: err });
+    res.send({ message: err });
   }
 });
 
@@ -33,7 +34,7 @@ router.get("/:slug", async (req, res) => {
 //Save a gallery
 router.post("/", async (req, res) => {
   const gallery = new Gallery({
-    ...req.body
+    ...req.body,
   });
   try {
     const savedGallery = await gallery.save();
