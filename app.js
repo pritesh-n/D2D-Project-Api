@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/static", express.static(path.join(__dirname, "static")));
+app.use("/static", express.static("static"));
 
 //IMPORT ROUTES
 const galleryRoutes = require("./routes/gallery");
