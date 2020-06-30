@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 var cors = require("cors");
 require("dotenv/config");
 const app = express();
@@ -8,7 +9,7 @@ const mongoose = require("mongoose");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("static"));
+app.use("/static", express.static(path.join(__dirname, "static")));
 
 //IMPORT ROUTES
 const galleryRoutes = require("./routes/gallery");
