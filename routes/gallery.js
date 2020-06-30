@@ -7,10 +7,36 @@ router.get("/", async ({ query }, res) => {
   try {
     let queryParams = { _id: 0 };
     let limit = query.limit ? Number(query.limit) : 10;
+    let filter = query.filter ? JSON.parse(query.filter) : {};
     if (query.meta_info) {
-      queryParams = { title: 1, desc: 1, slug: 1, category: 1, _id: 0 };
+      queryParams = {
+        title: 1,
+        desc: 1,
+        slug: 1,
+        category: 1,
+        image_url: 1,
+        _id: 0,
+      };
     }
-    const galleries = await Gallery.find({}, queryParams).limit(limit);
+    const galleries = await Gallery.find(filter, queryParams).limit(limit);
+    res.send(galleries);
+  } catch (err) {
+    res.send({ message: err });
+  }
+});
+
+//Get all category and article slugs
+router.get("/slugs", async (req, res) => {
+  try {
+    let queryParams = { _id: 0 };
+
+    queryParams = {
+      slug: 1,
+      category_slug: 1,
+      _id: 0,
+    };
+
+    const galleries = await Gallery.find({}, queryParams);
     res.send(galleries);
   } catch (err) {
     res.send({ message: err });

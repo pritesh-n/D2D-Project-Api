@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static("static"));
 
 //IMPORT ROUTES
 const galleryRoutes = require("./routes/gallery");
@@ -23,7 +24,7 @@ app.get("/", (req, res) => {
 
 //Connect to DB
 mongoose.connect(
-  "mongodb://localhost:27017/funfiesta",
+  "mongodb+srv://admin:admin@d2d-test-8dimz.mongodb.net/funfiesta?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
